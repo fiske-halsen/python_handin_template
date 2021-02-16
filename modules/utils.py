@@ -52,5 +52,5 @@ def write_headlines(md_files, out='output.txt'):
 
 
 
-md_list = ['read.md']
-write_headlines(md_list)
+
+#write_headlines(md_list)

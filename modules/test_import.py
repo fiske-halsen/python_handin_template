@@ -1,10 +1,10 @@
-import utils as u
+import modules.utils as u
 
 #Method 1
-u.get_file_names("/home/jovyan/python_handin_template")
+u.get_file_names("./modules")
 
 #Method 2
-u.get_all_file_names("/home/jovyan/python_handin_template/week_2_folder")
+u.get_all_file_names("./modules")
 
 #Method 3
 list_file_names = ['text.txt', 'history.csv', 'index.html']
@@ -15,5 +15,5 @@ list_file_names_emails = ['text.txt', 'history.csv', 'index.html', 'index@html.c
 u.print_emails(list_file_names_emails)
 
 #Method 5
-md_list = ['read.md']
+md_list = ['./modules/read.md']
 u.write_headlines(md_list)
