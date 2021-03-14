@@ -3,7 +3,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import uuid
 from concurrent.futures import ProcessPoolExecutor
 import multiprocessing
-
+from multiprocessing import Process
 class TextComparer():
     def __init__(self, url_list):
         self.url_list = url_list
@@ -28,35 +28,40 @@ class TextComparer():
                 if x in all_vowels:
                     count_vowels += 1
         return count_vowels/len(all_words)
-    
-    def worker(self, file_name):
-     f = open(str(file_name), "r")
-     line = f.readline()
-     all_words = line.split(' ')
-     all_vowels = 'aeiouyæøå'
-     vowel_dict = {}
-     count_vowels = 0
-     for word in all_words:
-        for l in word:
-            if l in all_vowels:
-                count_vowels +=1
-        vowel_dict[count_vowels] = file_name
-     key_max = max(vowel_dict, key=vowel_dict.get)
-     return vowel_dict[key_max] 
-    
 
-    def hardest_read(self):
+    def worker_func(self,file_name):
         jobs = []
-        for file_name in self.file_list:
-             p = multiprocessing.Process(target=worker, args=(i,))
-             jobs.append(p)
-             p.start()
-          
+        all_vowels = 'aeiouyæøå'
+        vowel_dict = {}
+        count_vowels = 0
+        f = open(str(file_name), "r")
+        line = f.readline()
+        all_words = line.split(' ')
+        for word in all_words:
+            for l in word:
+                if l in all_vowels:
+                    count_vowels +=1
+        vowel_dict[count_vowels] = file_name
+        key_max = max(vowel_dict, key=vowel_dict.get)
+        return vowel_dict[key_max]
+
+
     
+    def hardest_read(self):
+        procs = []
+        for file_name in self.file_list:
+            proc = Process(target=self.worker_func, args=(file_name,))
+            procs.append(proc)
+            proc.start()
+        for proc in procs:
+            print(procs)
+            proc.join()
+
+    
+   
            
 
-
-
+   
         
 
             
