@@ -57,12 +57,6 @@ class TextComparer():
             print(procs)
             proc.join()
 
-    
-   
-           
-
-   
-        
 
             
     def download(self, url, filename):
